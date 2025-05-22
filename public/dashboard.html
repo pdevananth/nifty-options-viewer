@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NIFTY Options Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">NIFTY Options Viewer</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Analytics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Settings</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-user me-1"></i> <span id="username">User</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="#">Preferences</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div id="notificationContainer" class="position-fixed top-0 end-0 p-3" style="z-index: 1050"></div>
+
+  <div class="container-fluid mt-3" id="dashboard">
+    <!-- Market Overview -->
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3 text-center border-end">
+                <div class="small text-muted">NIFTY Spot</div>
+                <div class="fs-4 fw-bold" id="niftySpot">--</div>
+                <span class="badge bg-light text-dark" id="niftyChange">--</span>
+              </div>
+              <div class="col-md-2 text-center border-end">
+                <div class="small text-muted">NIFTY Future</div>
+                <div class="fs-5" id="niftyFuture">--</div>
+              </div>
+              <div class="col-md-2 text-center border-end">
+                <div class="small text-muted">PCR Ratio</div>
+                <div class="fs-5" id="pcrRatio">--</div>
+              </div>
+              <div class="col-md-2 text-center border-end">
+                <div class="small text-muted">IV Index</div>
+                <div class="fs-5" id="ivIndex">--</div>
+              </div>
+              <div class="col-md-3 text-center">
+                <div class="small text-muted">Available Funds</div>
+                <div class="fs-5" id="availableFunds">--</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Controls -->
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <label for="expirySelect" class="form-label">Expiry Date</label>
+                <select id="expirySelect" class="form-select">
+                  <!-- Options populated by JS -->
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="strikeFilter" class="form-label">Filter Strike Price</label>
+                <input type="text" class="form-control" id="strikeFilter" placeholder="Enter strike price">
+              </div>
+              <div class="col-md-2 d-flex align-items-end">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="showPCR">
+                  <label class="form-check-label" for="showPCR">
+                    Show PCR Ratio
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4 d-flex align-items-end justify-content-end">
+                <button id="refreshData" class="btn btn-primary">
+                  <i class="fas fa-sync-alt me-1"></i> Refresh Data
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Selected Strike Details -->
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <div class="card shadow-sm">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">Selected Strike: <span id="selectedStrike">--</span></h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3 border-end">
+                <div class="text-center text-primary mb-2 fw-bold">Call (CE)</div>
+                <div class="row mb-2">
+                  <div class="col-6 text-muted">LTP:</div>
+                  <div class="col-6 text-end fw-bold" id="ceLTP">--</div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-6 text-muted">OI:</div>
+                  <div class="col-6 text-end" id="ceOI">--</div>
+                </div>
+                <div class="row">
+                  <div class="col-6 text-muted">Volume:</div>
+                  <div class="col-6 text-end" id="ceVolume">--</div>
+                </div>
+              </div>
+              <div class="col-md-3 border-end">
+                <div class="text-center text-danger mb-2 fw-bold">Put (PE)</div>
+                <div class="row mb-2">
+                  <div class="col-6 text-muted">LTP:</div>
+                  <div class="col-6 text-end fw-bold" id="peLTP">--</div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-6 text-muted">OI:</div>
+                  <div class="col-6 text-end" id="peOI">--</div>
+                </div>
+                <div class="row">
+                  <div class="col-6 text-muted">Volume:</div>
+                  <div class="col-6 text-end" id="peVolume">--</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="text-center mb-2 fw-bold">Strategy Info</div>
+                <div class="row mb-2">
+                  <div class="col-6 text-muted">Straddle Price:</div>
+                  <div class="col-6 text-end fw-bold" id="straddlePrice">--</div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-6 text-muted">Buying Power:</div>
+                  <div class="col-6 text-end" id="buyingPower">--</div>
+                </div>
+                <div class="row">
+                  <div class="col-6 text-muted">Lot Size:</div>
+                  <div class="col-6 text-end" id="lotSize">75</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Options Table -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card shadow-sm" id="optionsTableContainer">
+          <div class="card-header bg-light d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">NIFTY Options Chain</h5>
+            <div>
+              <span class="badge bg-warning text-dark me-2">ATM</span>
+              <span class="badge bg-primary me-2">Selected</span>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-sm table-hover mb-0">
+                <thead>
+                  <tr class="table-light">
+                    <th colspan="4" class="text-center text-primary">CALL OPTION (CE)</th>
+                    <th class="text-center border-start border-end">STRIKE</th>
+                    <th colspan="4" class="text-center text-danger">PUT OPTION (PE)</th>
+                    <th class="text-center pcr-value">PCR</th>
+                  </tr>
+                  <tr class="table-light">
+                    <th class="text-end">OI</th>
+                    <th class="text-end">Volume</th>
+                    <th class="text-end">LTP</th>
+                    <th class="text-end">Chg%</th>
+                    <th class="text-center border-start border-end">Price</th>
+                    <th class="text-end">Chg%</th>
+                    <th class="text-end">LTP</th>
+                    <th class="text-end">Volume</th>
+                    <th class="text-end">OI</th>
+                    <th class="text-center pcr-value">Value</th>
+                  </tr>
+                </thead>
+                <tbody id="optionsTableBody">
+                  <!-- Table rows will be populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

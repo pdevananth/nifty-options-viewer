@@ -1,0 +1,361 @@
+/* Enhanced style.css for NIFTY Options Viewer */
+
+/* General Styles */
+body {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Notification Styles */
+.notification-container {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  max-width: 400px;
+  z-index: 1050;
+}
+
+.notification {
+  margin-bottom: 10px;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15);
+  transition: opacity 0.5s ease, transform 0.3s ease-out;
+  transform: translateX(0);
+  opacity: 1;
+  border-left: 4px solid;
+}
+
+.notification.alert-success {
+  border-left-color: #28a745;
+}
+
+.notification.alert-info {
+  border-left-color: #17a2b8;
+}
+
+.notification.alert-warning {
+  border-left-color: #ffc107;
+}
+
+.notification.alert-danger {
+  border-left-color: #dc3545;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* Loader */
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  border-radius: 0.5rem;
+}
+
+/* Dashboard styles */
+.card {
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  border-top-left-radius: 0.5rem !important;
+  border-top-right-radius: 0.5rem !important;
+  font-weight: 600;
+}
+
+/* Market data display */
+.market-overview {
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+}
+
+.market-data-tile {
+  text-align: center;
+  padding: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+.market-data-tile:hover {
+  transform: translateY(-3px);
+}
+
+.market-data-label {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+}
+
+.market-data-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.market-data-change {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Table styles */
+.table {
+  margin-bottom: 0;
+  font-size: 0.875rem;
+}
+
+.table th, .table td {
+  padding: 0.5rem;
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+  cursor: pointer;
+}
+
+/* ATM and selected row highlighting */
+.table-warning {
+  --bs-table-bg: rgba(255, 193, 7, 0.15) !important;
+}
+
+.table-primary {
+  --bs-table-bg: rgba(13, 110, 253, 0.15) !important;
+}
+
+/* Fix for table hover effect combined with highlighting */
+.table-hover tbody tr.table-warning:hover {
+  --bs-table-bg: rgba(255, 193, 7, 0.25) !important;
+}
+
+.table-hover tbody tr.table-primary:hover {
+  --bs-table-bg: rgba(13, 110, 253, 0.25) !important;
+}
+
+/* Strike price column styling */
+.table th:nth-child(5),
+.table td:nth-child(5) {
+  background-color: #f8f9fa;
+  position: sticky;
+  left: auto;
+  z-index: 1;
+  font-weight: 600;
+}
+
+/* Option chain enhancements */
+.options-table-wrapper {
+  max-height: calc(100vh - 440px);
+  overflow-y: auto;
+  border-radius: 0.5rem;
+}
+
+.option-chain-header {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 2;
+}
+
+.table-sm th, .table-sm td {
+  padding: 0.3rem 0.5rem;
+}
+
+/* Badge styles */
+.badge-atm {
+  background-color: #fd7e14;
+  color: #fff;
+}
+
+.badge-selected {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+/* Controls section */
+.control-card {
+  margin-bottom: 1rem;
+}
+
+.control-card .form-label {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Status indicators */
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-connected {
+  background-color: #28a745;
+}
+
+.status-disconnected {
+  background-color: #dc3545;
+}
+
+.status-waiting {
+  background-color: #ffc107;
+}
+
+/* Login page styles */
+.login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding-top: 10vh;
+}
+
+.login-logo {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 50%;
+  padding: 15px;
+}
+
+/* Stylish toggle password button */
+#togglePassword {
+  cursor: pointer;
+}
+
+/* Animation for refresh button */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Connection status bar */
+.connection-status {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  z-index: 1030;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.status-connected {
+  background-color: rgba(40, 167, 69, 0.9);
+  color: #fff;
+}
+
+.status-disconnected {
+  background-color: rgba(220, 53, 69, 0.9);
+  color: #fff;
+}
+
+.status-connecting {
+  background-color: rgba(255, 193, 7, 0.9);
+  color: #212529;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .card-body {
+    padding: 0.75rem;
+  }
+  
+  .table th, .table td {
+    padding: 0.4rem;
+    font-size: 0.75rem;
+  }
+  
+  .market-data-value {
+    font-size: 1.25rem;
+  }
+  
+  .fs-4 {
+    font-size: 1.25rem !important;
+  }
+  
+  .fs-5 {
+    font-size: 1rem !important;
+  }
+  
+  .options-table-wrapper {
+    max-height: calc(100vh - 380px);
+  }
+}
+
+/* Dark mode support (if browser supports prefers-color-scheme) */
+@media (prefers-color-scheme: dark) {
+  body.dark-mode {
+    background-color: #212529;
+    color: #f8f9fa;
+  }
+  
+  body.dark-mode .card {
+    background-color: #343a40;
+    border-color: #495057;
+  }
+  
+  body.dark-mode .card-header {
+    background-color: #495057;
+    color: #f8f9fa;
+  }
+  
+  body.dark-mode .table {
+    color: #e9ecef;
+  }
+  
+  body.dark-mode .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.075);
+  }
+  
+  body.dark-mode .table th:nth-child(5),
+  body.dark-mode .table td:nth-child(5) {
+    background-color: #343a40;
+  }
+  
+  body.dark-mode .market-overview {
+    background: linear-gradient(to right, #343a40, #212529);
+  }
+  
+  body.dark-mode .form-control {
+    background-color: #495057;
+    border-color: #6c757d;
+    color: #f8f9fa;
+  }
+  
+  body.dark-mode .form-control:focus {
+    background-color: #495057;
+    color: #f8f9fa;
+  }
+}
